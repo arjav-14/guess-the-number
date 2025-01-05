@@ -1,0 +1,98 @@
+
+</html> 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess The Number</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .image img {
+            width: 150px;
+            height: auto;
+            margin: 20px 0;
+            border-radius: 50%;
+        }
+
+        input {
+            margin: 10px 0;
+            padding: 5px;
+            font-size: 16px;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h2>Welcome To The Guess The Number Game</h2>
+    <div class="image">
+        <img src="images.jpeg" alt="Game Logo">
+    </div>
+    <div>
+        <label for="min-r">Min Range:</label>
+        <input type="number" id="min-r" placeholder="Enter min range">
+    </div>
+    <div>
+        <label for="max-r">Max Range:</label>
+        <input type="number" id="max-r" placeholder="Enter max range">
+    </div>
+    <button id="start-game">Start Game</button>
+    <div class="guess-section" style="display: none;">
+        <h3>Guess The Number!</h3>
+        <input type="number" id="guess-input" placeholder="Enter your guess">
+        <button id="submit-guess">Submit Guess</button>
+        <p class="result" id="result-message"></p>
+    </div>
+
+    <script>
+        let randomNumber;
+        let minRange;
+        let maxRange;
+
+        document.getElementById("start-game").addEventListener("click", () => {
+            minRange = parseInt(document.getElementById("min-r").value);
+            maxRange = parseInt(document.getElementById("max-r").value);
+
+            if (isNaN(minRange) || isNaN(maxRange) || minRange >= maxRange) {
+                alert("Please enter a valid range where Min is less than Max.");
+                return;
+            }
+
+            randomNumber = Math.floor(Math.random() * (maxRange - minRange + 1)) + minRange;
+            console.log("Random Number (for testing):", randomNumber); // For debugging purposes
+            document.querySelector(".guess-section").style.display = "block";
+            document.getElementById("result-message").textContent = ""; // Clear previous result
+        });
+
+        document.getElementById("submit-guess").addEventListener("click", () => {
+            const userGuess = parseInt(document.getElementById("guess-input").value);
+
+            if (isNaN(userGuess)) {
+                alert("Please enter a valid number.");
+                return;
+            }
+
+            if (userGuess === randomNumber) {
+                document.getElementById("result-message").textContent = "Congratulations! You guessed it right!";
+                document.getElementById("result-message").style.color = "green";
+            } else if (userGuess < randomNumber) {
+                document.getElementById("result-message").textContent = "Too low! Try again.";
+                document.getElementById("result-message").style.color = "red";
+            } else {
+                document.getElementById("result-message").textContent = "Too high! Try again.";
+                document.getElementById("result-message").style.color = "red";
+            }
+        });
+    </script>
+</body>
+</html>

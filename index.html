@@ -1,6 +1,3 @@
-
-</html> 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,27 +6,95 @@
     <title>Guess The Number</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             text-align: center;
             padding: 20px;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: #fff;
+        }
+
+        h2 {
+            margin-top: 10px;
+            font-size: 2rem;
+            font-weight: bold;
         }
 
         .image img {
             width: 150px;
             height: auto;
-            margin: 20px 0;
+            margin: 20px auto;
             border-radius: 50%;
+            border: 4px solid #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            display: inline-block;
+        }
+
+        label {
+            display: block;
+            font-size: 1.2rem;
+            margin: 10px 0 5px;
+            text-align: left;
+            color: #f0f0f0;
         }
 
         input {
+            width: 80%;
+            padding: 10px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
             margin: 10px 0;
-            padding: 5px;
-            font-size: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        input:focus {
+            outline: none;
+            border: 2px solid #fff;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #2575fc;
+            background: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        button:hover {
+            background: #2575fc;
+            color: #fff;
+            transform: scale(1.05);
+        }
+
+        .guess-section {
+            margin-top: 20px;
         }
 
         .result {
             margin-top: 20px;
+            font-size: 1.2rem;
             font-weight: bold;
+            color: #f0f0f0;
+        }
+
+        .result.green {
+            color: #28a745;
+        }
+
+        .result.red {
+            color: #dc3545;
         }
     </style>
 </head>
@@ -38,22 +103,23 @@
     <div class="image">
         <img src="images.jpeg" alt="Game Logo">
     </div>
-    <div>
-        <label for="min-r">Min Range:</label>
-        <input type="number" id="min-r" placeholder="Enter min range">
+    <div class="container">
+        <div>
+            <label for="min-r">Min Range:</label>
+            <input type="number" id="min-r" placeholder="Enter min range">
+        </div>
+        <div>
+            <label for="max-r">Max Range:</label>
+            <input type="number" id="max-r" placeholder="Enter max range">
+        </div>
+        <button id="start-game">Start Game</button>
+        <div class="guess-section" style="display: none;">
+            <h3>Guess The Number!</h3>
+            <input type="number" id="guess-input" placeholder="Enter your guess">
+            <button id="submit-guess">Submit Guess</button>
+            <p class="result" id="result-message"></p>
+        </div>
     </div>
-    <div>
-        <label for="max-r">Max Range:</label>
-        <input type="number" id="max-r" placeholder="Enter max range">
-    </div>
-    <button id="start-game">Start Game</button>
-    <div class="guess-section" style="display: none;">
-        <h3>Guess The Number!</h3>
-        <input type="number" id="guess-input" placeholder="Enter your guess">
-        <button id="submit-guess">Submit Guess</button>
-        <p class="result" id="result-message"></p>
-    </div>
-
     <script>
         let randomNumber;
         let minRange;
@@ -82,15 +148,16 @@
                 return;
             }
 
+            const resultMessage = document.getElementById("result-message");
             if (userGuess === randomNumber) {
-                document.getElementById("result-message").textContent = "Congratulations! You guessed it right!";
-                document.getElementById("result-message").style.color = "green";
+                resultMessage.textContent = "Congratulations! You guessed it right!";
+                resultMessage.className = "result green";
             } else if (userGuess < randomNumber) {
-                document.getElementById("result-message").textContent = "Too low! Try again.";
-                document.getElementById("result-message").style.color = "red";
+                resultMessage.textContent = "Too low! Try again.";
+                resultMessage.className = "result red";
             } else {
-                document.getElementById("result-message").textContent = "Too high! Try again.";
-                document.getElementById("result-message").style.color = "red";
+                resultMessage.textContent = "Too high! Try again.";
+                resultMessage.className = "result red";
             }
         });
     </script>
